@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "ShiftCodeRedeemer": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "Games": "wonderlands",
+        "Password": "blah",
+        "Username": "meandu229@protonmail.com"
+      }
+    }
+  }
+}

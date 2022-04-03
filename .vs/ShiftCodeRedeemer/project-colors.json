@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "61fe02cc-e64f-4fcd-9b4f-abd41f47e489": {
+      "ProjectGuid": "61fe02cc-e64f-4fcd-9b4f-abd41f47e489",
+      "DisplayName": "ShiftCodeRedeemer",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "f1f7b8fd-1892-4628-bb93-39111e8ce60d": {
+      "ProjectGuid": "f1f7b8fd-1892-4628-bb93-39111e8ce60d",
+      "DisplayName": "ShifftCodeReddemer.Tests",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

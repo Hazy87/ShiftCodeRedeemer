@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "dgSpecHash": "CMwLdmBf6X1c7c15iTh0/l1WwP63qz/y1zzzEwuPmMIyD4RcEsF3Oc2xq8N7laxAaPWdJBHS17fVxdLZD0FZQw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\holea\\source\\repos\\ShiftCodeRedeemer\\ShiftCodeRedeemer\\ShiftCodeRedeemer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\holea\\.nuget\\packages\\flurl\\3.0.4\\flurl.3.0.4.nupkg.sha512",
+    "C:\\Users\\holea\\.nuget\\packages\\flurl.http\\3.2.2\\flurl.http.3.2.2.nupkg.sha512",
+    "C:\\Users\\holea\\.nuget\\packages\\htmlagilitypack\\1.11.42\\htmlagilitypack.1.11.42.nupkg.sha512",
+    "C:\\Users\\holea\\.nuget\\packages\\microsoft.extensions.configuration\\6.0.0\\microsoft.extensions.configuration.6.0.0.nupkg.sha512",
+    "C:\\Users\\holea\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\6.0.0\\microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\holea\\.nuget\\packages\\microsoft.extensions.configuration.environmentvariables\\6.0.1\\microsoft.extensions.configuration.environmentvariables.6.0.1.nupkg.sha512",
+    "C:\\Users\\holea\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\6.0.0\\microsoft.extensions.dependencyinjection.6.0.0.nupkg.sha512",
+    "C:\\Users\\holea\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\holea\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
+    "C:\\Users\\holea\\.nuget\\packages\\microsoft.netcore.platforms\\2.1.2\\microsoft.netcore.platforms.2.1.2.nupkg.sha512",
+    "C:\\Users\\holea\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\holea\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\holea\\.nuget\\packages\\system.text.encoding.codepages\\4.5.1\\system.text.encoding.codepages.4.5.1.nupkg.sha512"
+  ],
+  "logs": []
+}
