@@ -14,6 +14,7 @@ var serviceProvider = new ServiceCollection()
     .AddSingleton<IRedeemService, RedeemService>()
     .AddSingleton<IRedeemCodeService, RedeemCodeService>()
     .AddSingleton<IRedeemDbService, RedeemedDbService>()
+    .AddSingleton<IHtmlParser, HtmlParser>()
     .AddSingleton<IShiftClient, ShiftClient>()
     .BuildServiceProvider();
 var service = serviceProvider.GetService<IHandlerService>();

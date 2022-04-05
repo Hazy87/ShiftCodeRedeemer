@@ -7,11 +7,13 @@ namespace ShiftCodeRedeemer.Services;
 
 public class ShiftClient : IShiftClient
 {
+    private readonly IHtmlParser _htmlParser;
     private string base_url = "https://shift.gearboxsoftware.com";
     private CookieSession _session;
 
-    public ShiftClient()
+    public ShiftClient(IHtmlParser htmlParser)
     {
+        _htmlParser = htmlParser;
         _session = new CookieSession("https://shift.gearboxsoftware.com");
     }
     public async Task<string> GetToken(string path)
@@ -46,8 +48,24 @@ public class ShiftClient : IShiftClient
         var html =await  _session.Request($"{base_url}/entitlement_offer_codes?code={code}").WithHeader("x-csrf-token", token)
             .WithHeader("x-requested-with", "XMLHttpRequest").GetStringAsync();
 
-        HtmlDocument doc = new HtmlDocument();
-        doc.LoadHtml(html);
+        var entitlementDetails = _htmlParser.GetEntitlementDetails(html);
+        await RedeemForm(entitlementDetails.inp, entitlementDetails.form_code, entitlementDetails.check,
+            entitlementDetails.service);
         return "";
+    }
+
+    public async Task<string> RedeemForm(string inp, string form_code, string check, string service)
+    {
+        var response = await _session.Request($"{base_url}/code_redemptions")
+            .WithHeader("Referer", $"{base_url}/new")
+            .PostMultipartAsync(x =>
+            {
+                x.AddString("authenticity_token", inp);
+                x.AddString("archway_code_redemption[code]", form_code);
+                x.AddString("archway_code_redemption[check]", check);
+                x.AddString("archway_code_redemption[service]", service);
+            });
+        var respstring = await response.ResponseMessage.Content.ReadAsStringAsync();
+        return respstring;
     }
 }

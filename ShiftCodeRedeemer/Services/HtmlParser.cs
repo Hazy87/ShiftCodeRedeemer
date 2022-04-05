@@ -12,6 +12,8 @@ public class HtmlParser : IHtmlParser
         //return doc.DocumentNode.SelectNodes("//meta[@name='csrf-token']")[0].Attributes.Single(x => x.Name == "content").Value;
         var inp = doc.DocumentNode.SelectNodes("//input[@name='authenticity_token']").Single().Attributes["value"].Value;
         var form_code = doc.DocumentNode.SelectNodes("//input[@id='archway_code_redemption_code']").Single().Attributes["value"].Value;
-        return (inp,form_code,null,null);
+        var check = doc.DocumentNode.SelectNodes("//input[@id='archway_code_redemption_check']").Single().Attributes["value"].Value;
+        var service = doc.DocumentNode.SelectNodes("//input[@id='archway_code_redemption_service']").Single().Attributes["value"].Value;
+        return (inp,form_code,check,service);
     }
 }
