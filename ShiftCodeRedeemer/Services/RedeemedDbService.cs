@@ -29,7 +29,7 @@ public class RedeemedDbService : IRedeemDbService
             return await Task.FromResult(_config);
         if (!File.Exists("Redeemed.json"))
             File.WriteAllText("Redeemed.json", JsonSerializer.Serialize(new ConfigModel(){UserCodes = new Dictionary<string, List<CodeModel>>()}));
-        using FileStream stream = File.OpenRead("Redeemed.json");
+        using var stream = File.OpenRead("Redeemed.json");
         _config = await JsonSerializer.DeserializeAsync<ConfigModel>(stream);
         return _config;
     }

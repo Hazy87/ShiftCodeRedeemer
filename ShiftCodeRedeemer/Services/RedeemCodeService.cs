@@ -10,10 +10,10 @@ public class RedeemCodeService : IRedeemCodeService
     {
         _shiftClient = shiftClient;
     }
-    public async Task Redeem(CodeModel code, Config config)
+    public async Task<string> Redeem(CodeModel code, Config config)
     {
         await _shiftClient.Login(config.Username, config.Password);
         
-        await _shiftClient.GetRedemptionForm(code.Code);
+        return await _shiftClient.GetRedemptionForm(code.Code);
     }
 }

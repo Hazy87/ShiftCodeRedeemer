@@ -2,5 +2,5 @@
 
 public interface IRedeemCodeService
 {
-    Task Redeem(CodeModel code, Config config);
+    Task<string> Redeem(CodeModel code, Config config);
 }

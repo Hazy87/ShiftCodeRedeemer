@@ -2,5 +2,5 @@
 
 public interface INotifyService
 {
-    Task Notify(CodeModel code, string configUsername);
+    Task Notify(CodeModel code, string username, string message);
 }

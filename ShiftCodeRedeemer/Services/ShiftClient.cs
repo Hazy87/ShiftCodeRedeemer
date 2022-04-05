@@ -36,10 +36,7 @@ public class ShiftClient : IShiftClient
                     .AddString("user[password]", password)
                     .AddString("commit", "SIGN IN");
             });
-        var respstring = await response.ResponseMessage.Content.ReadAsStringAsync();
-
-        return "";
-        
+        return await response.ResponseMessage.Content.ReadAsStringAsync();
     }
 
     public async Task<string> GetRedemptionForm(string code)
@@ -49,9 +46,8 @@ public class ShiftClient : IShiftClient
             .WithHeader("x-requested-with", "XMLHttpRequest").GetStringAsync();
 
         var entitlementDetails = _htmlParser.GetEntitlementDetails(html);
-        await RedeemForm(entitlementDetails.inp, entitlementDetails.form_code, entitlementDetails.check,
+        return await RedeemForm(entitlementDetails.inp, entitlementDetails.form_code, entitlementDetails.check,
             entitlementDetails.service);
-        return "";
     }
 
     public async Task<string> RedeemForm(string inp, string form_code, string check, string service)
@@ -66,6 +62,8 @@ public class ShiftClient : IShiftClient
                 x.AddString("archway_code_redemption[service]", service);
             });
         var respstring = await response.ResponseMessage.Content.ReadAsStringAsync();
-        return respstring;
+        var redemptionResponse = _htmlParser.GetRedemptionResponse(respstring);
+        Console.WriteLine($"The code : {form_code} gives the message {redemptionResponse}");
+        return redemptionResponse;
     }
 }
