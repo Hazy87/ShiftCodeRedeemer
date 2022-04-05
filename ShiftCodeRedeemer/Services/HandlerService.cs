@@ -20,14 +20,27 @@ public class HandlerService : IHandlerService
         var configs = _configService.GetConfig();
         foreach (var config in configs)
         {
-            var codesToRedeem = new List<CodeModel>();
-            foreach (var game in config.Games)
-            {
-                var codes  = await _codeGettingService.GetCodes(game);
-                codesToRedeem.AddRange(codes.SelectMany(x => x.Codes));
-            }
-
-            await _redeemService.Redeem(config, codesToRedeem);
+            Console.WriteLine($"Running for {config.Username}");
+            await RedeemForConfig(config);
         }
+    }
+
+    private async Task RedeemForConfig(Config config)
+    {
+        var codesToRedeem = await GetCodesForGames(config);
+
+        await _redeemService.Redeem(config, codesToRedeem);
+    }
+
+    private async Task<List<CodeModel>> GetCodesForGames(Config config)
+    {
+        var codesToRedeem = new List<CodeModel>();
+        foreach (var game in config.Games)
+        {
+            var codes = await _codeGettingService.GetCodes(game);
+            codesToRedeem.AddRange(codes.SelectMany(x => x.Codes));
+        }
+
+        return codesToRedeem;
     }
 }

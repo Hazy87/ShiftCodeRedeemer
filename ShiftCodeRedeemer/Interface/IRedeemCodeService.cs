@@ -1,6 +1,8 @@
-﻿namespace ShiftCodeRedeemer.Interface;
+﻿using ShiftCodeRedeemer.Services;
+
+namespace ShiftCodeRedeemer.Interface;
 
 public interface IRedeemCodeService
 {
-    Task<string> Redeem(CodeModel code, Config config);
+    Task<RedemptionResponse> Redeem(CodeModel code, Config config);
 }

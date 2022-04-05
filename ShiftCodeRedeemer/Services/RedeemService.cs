@@ -19,11 +19,11 @@ public class RedeemService : IRedeemService
         var redeemedCodes = await _redeemDbService.GetRedeemedCodes(config);
         foreach (var code in codesToRedeem.Where(x => redeemedCodes.All(y => y.Code != x.Code)))
         {
-            var message = await _redeemCodeService.Redeem(code, config);
+            var redemptionResponse = await _redeemCodeService.Redeem(code, config);
             
-            await _notifyService.Notify(code, config.Username, message);
+            await _notifyService.Notify(code, config.Username, redemptionResponse);
 
-            await _redeemDbService.Redeemed(code, config.Username);
+            await _redeemDbService.Redeemed(code, config.Username, redemptionResponse);
         }
     }
 }

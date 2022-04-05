@@ -8,19 +8,23 @@ public class RedeemedDbService : IRedeemDbService
 {
     private ConfigModel _config;
 
-    public RedeemedDbService()
-    {
-        
-    }
-
-    public async Task Redeemed(CodeModel code, string configUsername)
+    public async Task Redeemed(CodeModel code, string configUsername, RedemptionResponse redemptionResponse)
     {
         var db = await GetDb();
+        code.RedemptionResponse = redemptionResponse;
         if (!db.UserCodes.ContainsKey(configUsername))
             db.UserCodes[configUsername] = new List<CodeModel>();
-        
+
         if (db.UserCodes[configUsername].All(x => x.Code != code.Code))
             db.UserCodes[configUsername].Add(code);
+        else
+            db.UserCodes[configUsername].Single(x => x.Code == code.Code).RedemptionResponse = redemptionResponse;
+        await SaveDb(db);
+    }
+
+    private async Task SaveDb(ConfigModel db)
+    {
+        File.WriteAllText("Redeemed.json", JsonSerializer.Serialize(db));
     }
 
     private async Task<ConfigModel> GetDb()
@@ -38,7 +42,7 @@ public class RedeemedDbService : IRedeemDbService
     {
         var db = await GetDb();
         if (db.UserCodes.ContainsKey(config.Username))
-            return db.UserCodes[config.Username];
+            return db.UserCodes[config.Username].Where(x => x.RedemptionResponse == RedemptionResponse.AlreadyRedeemed).ToList();
         return new List<CodeModel>();
     }
 }

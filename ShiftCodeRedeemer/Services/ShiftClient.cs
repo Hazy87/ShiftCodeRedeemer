@@ -39,7 +39,7 @@ public class ShiftClient : IShiftClient
         return await response.ResponseMessage.Content.ReadAsStringAsync();
     }
 
-    public async Task<string> GetRedemptionForm(string code)
+    public async Task<RedemptionResponse> GetRedemptionForm(string code)
     {
         var token = await GetToken("/code_redemptions/new");
         var html =await  _session.Request($"{base_url}/entitlement_offer_codes?code={code}").WithHeader("x-csrf-token", token)
@@ -50,7 +50,7 @@ public class ShiftClient : IShiftClient
             entitlementDetails.service);
     }
 
-    public async Task<string> RedeemForm(string inp, string form_code, string check, string service)
+    public async Task<RedemptionResponse> RedeemForm(string inp, string form_code, string check, string service)
     {
         var response = await _session.Request($"{base_url}/code_redemptions")
             .WithHeader("Referer", $"{base_url}/new")
@@ -64,6 +64,6 @@ public class ShiftClient : IShiftClient
         var respstring = await response.ResponseMessage.Content.ReadAsStringAsync();
         var redemptionResponse = _htmlParser.GetRedemptionResponse(respstring);
         Console.WriteLine($"The code : {form_code} gives the message {redemptionResponse}");
-        return redemptionResponse;
+        return ResponseMapper.Map(redemptionResponse);
     }
 }

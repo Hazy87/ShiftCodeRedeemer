@@ -12,9 +12,9 @@ public class NotifyService : INotifyService
     {
         _botClient = botClient;
     }
-    public async Task Notify(CodeModel code, string username, string message)
+    public async Task Notify(CodeModel code, string username, RedemptionResponse message)
     {
-        await Send(message, 226370609);
+        await Send($"Tried to redeem {code.Code} for {code.Reward} got {message.ToString()}", int.Parse(Environment.GetEnvironmentVariable("ChatId")));
     }
 
     public async Task Send(string myMessage, long chatId)
