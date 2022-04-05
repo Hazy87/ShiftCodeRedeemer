@@ -4,5 +4,8 @@ public enum RedemptionResponse
 {
     Unknown,
     AlreadyRedeemed,
-    Other
+    Other,
+    NotAvailableForYouAccount,
+    Expired,
+    EnableShiftTitleFirst
 }

@@ -4,5 +4,5 @@ namespace ShiftCodeRedeemer.Interface;
 
 public interface IRedeemCodeService
 {
-    Task<RedemptionResponse> Redeem(CodeModel code, Config config);
+    Task<RedemptionResponse> Redeem(OrcicornCodeModel orcicornCode, Config config, string service);
 }

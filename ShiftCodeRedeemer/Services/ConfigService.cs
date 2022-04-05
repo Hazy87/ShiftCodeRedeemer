@@ -11,7 +11,8 @@ public class ConfigService : IConfigService
         {
             Username = Environment.GetEnvironmentVariable("Username"),
             Password = Environment.GetEnvironmentVariable("Password"),
-            Games = Environment.GetEnvironmentVariable("Games").Split(",")
+            Games = Environment.GetEnvironmentVariable("Games").Split(","),
+            Services = Environment.GetEnvironmentVariable("Services").Split(",")
         });
         return configs;
     }

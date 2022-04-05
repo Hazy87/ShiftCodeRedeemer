@@ -32,9 +32,9 @@ public class HandlerService : IHandlerService
         await _redeemService.Redeem(config, codesToRedeem);
     }
 
-    private async Task<List<CodeModel>> GetCodesForGames(Config config)
+    private async Task<List<OrcicornCodeModel>> GetCodesForGames(Config config)
     {
-        var codesToRedeem = new List<CodeModel>();
+        var codesToRedeem = new List<OrcicornCodeModel>();
         foreach (var game in config.Games)
         {
             var codes = await _codeGettingService.GetCodes(game);

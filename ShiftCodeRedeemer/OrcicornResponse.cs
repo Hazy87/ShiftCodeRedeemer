@@ -2,5 +2,5 @@
 
 public class OrcicornResponse
 {
-    public List<CodeModel> Codes { get; set; }
+    public List<OrcicornCodeModel> Codes { get; set; }
 }

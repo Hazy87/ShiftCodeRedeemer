@@ -4,6 +4,7 @@ namespace ShiftCodeRedeemer.Interface;
 
 public interface IRedeemDbService
 {
-    Task Redeemed(CodeModel code, string configUsername, RedemptionResponse redemptionResponse);
-    Task<List<CodeModel>> GetRedeemedCodes(Config config);
+    Task Redeemed(string code, string platform, string configUsername, RedemptionResponse redemptionResponse,
+        string reward);
+    Task<List<RedeemedCodeModel>> GetRedeemedCodes(Config config);
 }

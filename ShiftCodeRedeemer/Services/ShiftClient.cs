@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
 using Flurl.Http;
 using HtmlAgilityPack;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Polly;
 using ShiftCodeRedeemer.Interface;
 
 namespace ShiftCodeRedeemer.Services;
@@ -39,31 +41,45 @@ public class ShiftClient : IShiftClient
         return await response.ResponseMessage.Content.ReadAsStringAsync();
     }
 
-    public async Task<RedemptionResponse> GetRedemptionForm(string code)
+    public async Task<RedemptionResponse> GetRedemptionForm(string code, string service)
     {
         var token = await GetToken("/code_redemptions/new");
-        var html =await  _session.Request($"{base_url}/entitlement_offer_codes?code={code}").WithHeader("x-csrf-token", token)
-            .WithHeader("x-requested-with", "XMLHttpRequest").GetStringAsync();
+        var polly = await Policy.Handle<Exception>().WaitAndRetryAsync(4, x => new TimeSpan(0, 0, 30)).ExecuteAndCaptureAsync(async () =>
+        {
+            var html = await _session.Request($"{base_url}/entitlement_offer_codes?code={code}")
+                .WithHeader("x-csrf-token", token)
+                .WithHeader("x-requested-with", "XMLHttpRequest").GetStringAsync();
+            if (html.Trim() == "This code is not available for your account")
+                return RedemptionResponse.NotAvailableForYouAccount;
+            if (html.Trim() == "This SHiFT code has expired")
+                return RedemptionResponse.Expired;
+            var entitlementDetails = _htmlParser.GetEntitlementDetails(html);
+            return await RedeemForm(entitlementDetails.inp, entitlementDetails.form_code, entitlementDetails.check,
+                service);
+        });
+        return polly.Result;
 
-        var entitlementDetails = _htmlParser.GetEntitlementDetails(html);
-        return await RedeemForm(entitlementDetails.inp, entitlementDetails.form_code, entitlementDetails.check,
-            entitlementDetails.service);
     }
 
     public async Task<RedemptionResponse> RedeemForm(string inp, string form_code, string check, string service)
     {
-        var response = await _session.Request($"{base_url}/code_redemptions")
-            .WithHeader("Referer", $"{base_url}/new")
-            .PostMultipartAsync(x =>
+        var polly = await Policy.Handle<Exception>().WaitAndRetryAsync(4, x => new TimeSpan(0, 0, 30)).ExecuteAndCaptureAsync(
+            async () =>
             {
-                x.AddString("authenticity_token", inp);
-                x.AddString("archway_code_redemption[code]", form_code);
-                x.AddString("archway_code_redemption[check]", check);
-                x.AddString("archway_code_redemption[service]", service);
+                var response = await _session.Request($"{base_url}/code_redemptions")
+                    .WithHeader("Referer", $"{base_url}/new")
+                    .PostMultipartAsync(x =>
+                    {
+                        x.AddString("authenticity_token", inp);
+                        x.AddString("archway_code_redemption[code]", form_code);
+                        x.AddString("archway_code_redemption[check]", check);
+                        x.AddString("archway_code_redemption[service]", service);
+                    });
+                var respstring = await response.ResponseMessage.Content.ReadAsStringAsync();
+                var redemptionResponse = _htmlParser.GetRedemptionResponse(respstring);
+                Console.WriteLine($"The code : {form_code} gives the message {redemptionResponse}");
+                return ResponseMapper.Map(redemptionResponse);
             });
-        var respstring = await response.ResponseMessage.Content.ReadAsStringAsync();
-        var redemptionResponse = _htmlParser.GetRedemptionResponse(respstring);
-        Console.WriteLine($"The code : {form_code} gives the message {redemptionResponse}");
-        return ResponseMapper.Map(redemptionResponse);
+        return polly.Result;
     }
 }

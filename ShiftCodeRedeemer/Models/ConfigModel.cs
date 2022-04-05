@@ -2,5 +2,5 @@
 
 public class ConfigModel
 {
-    public Dictionary<string, List<CodeModel>> UserCodes { get; set; }
+    public Dictionary<string, List<RedeemedCodeModel>> UserCodes { get; set; }
 }

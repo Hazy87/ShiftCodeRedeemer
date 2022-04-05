@@ -9,10 +9,10 @@ public class HtmlParser : IHtmlParser
     {
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
-        var inp = doc.DocumentNode.SelectNodes("//input[@name='authenticity_token']").Single().Attributes["value"].Value;
-        var form_code = doc.DocumentNode.SelectNodes("//input[@id='archway_code_redemption_code']").Single().Attributes["value"].Value;
-        var check = doc.DocumentNode.SelectNodes("//input[@id='archway_code_redemption_check']").Single().Attributes["value"].Value;
-        var service = doc.DocumentNode.SelectNodes("//input[@id='archway_code_redemption_service']").Single().Attributes["value"].Value;
+        var inp = doc.DocumentNode.SelectNodes("//input[@name='authenticity_token']").First().Attributes["value"].Value;
+        var form_code = doc.DocumentNode.SelectNodes("//input[@id='archway_code_redemption_code']").First().Attributes["value"].Value;
+        var check = doc.DocumentNode.SelectNodes("//input[@id='archway_code_redemption_check']").First().Attributes["value"].Value;
+        var service = doc.DocumentNode.SelectNodes("//input[@id='archway_code_redemption_service']").First().Attributes["value"].Value;
         return (inp,form_code,check,service);
     }
 

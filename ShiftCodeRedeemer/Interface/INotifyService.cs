@@ -4,5 +4,5 @@ namespace ShiftCodeRedeemer.Interface;
 
 public interface INotifyService
 {
-    Task Notify(CodeModel code, string username, RedemptionResponse message);
+    Task Notify(OrcicornCodeModel orcicornCode, string username, RedemptionResponse message, string configService);
 }

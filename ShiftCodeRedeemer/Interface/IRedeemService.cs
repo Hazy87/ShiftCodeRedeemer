@@ -2,5 +2,5 @@
 
 public interface IRedeemService
 {
-    Task Redeem(Config config, List<CodeModel> codesToRedeem);
+    Task Redeem(Config config, List<OrcicornCodeModel> codesToRedeem);
 }
