@@ -43,7 +43,7 @@ public class RedeemedDbService : IRedeemDbService
     {
         var db = await GetDb();
         if (db.UserCodes.ContainsKey(config.Username))
-            return db.UserCodes[config.Username].Where(x => x.RedemptionResponse == RedemptionResponse.AlreadyRedeemed|| x.RedemptionResponse == RedemptionResponse.NotAvailableForYouAccount || x.RedemptionResponse == RedemptionResponse.Expired || x.RedemptionResponse == RedemptionResponse.EnableShiftTitleFirst).
+            return db.UserCodes[config.Username].Where(x => x.RedemptionResponse == RedemptionResponse.AlreadyRedeemed|| x.RedemptionResponse == RedemptionResponse.NotAvailableForYouAccount || x.RedemptionResponse == RedemptionResponse.Expired || x.RedemptionResponse == RedemptionResponse.EnableShiftTitleFirst || x.RedemptionResponse == RedemptionResponse.SuccessfullyRedeemed).
 
 ToList();
         return new List<RedeemedCodeModel>();

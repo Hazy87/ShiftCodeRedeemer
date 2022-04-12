@@ -1,6 +1,6 @@
 ﻿using ShiftCodeRedeemer.Services;
 
-namespace ShiftCodeRedeemer;
+namespace ShiftCodeRedeemer.Models;
 
 public class RedeemedCodeModel
 {

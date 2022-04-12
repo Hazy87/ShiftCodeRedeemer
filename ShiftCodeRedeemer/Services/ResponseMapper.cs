@@ -6,6 +6,8 @@ public class ResponseMapper
     {
         switch (response)
         {
+            case "Your code was successfully redeemed":
+                return RedemptionResponse.SuccessfullyRedeemed;
             case "This SHiFT code has already been redeemed":
                 return RedemptionResponse.AlreadyRedeemed;
             case "To continue to redeem SHiFT codes, please launch a SHiFT-enabled title first!":

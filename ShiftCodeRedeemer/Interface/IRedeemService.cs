@@ -1,4 +1,6 @@
-﻿namespace ShiftCodeRedeemer.Interface;
+﻿using ShiftCodeRedeemer.Models;
+
+namespace ShiftCodeRedeemer.Interface;
 
 public interface IRedeemService
 {

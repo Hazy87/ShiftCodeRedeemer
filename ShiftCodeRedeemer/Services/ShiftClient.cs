@@ -2,6 +2,7 @@
 using Flurl.Http;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.Extensions.Logging;
 using Polly;
 using ShiftCodeRedeemer.Interface;
 
@@ -10,17 +11,21 @@ namespace ShiftCodeRedeemer.Services;
 public class ShiftClient : IShiftClient
 {
     private readonly IHtmlParser _htmlParser;
+    private readonly ILogger<ShiftClient> _logger;
     private string base_url = "https://shift.gearboxsoftware.com";
     private CookieSession _session;
 
-    public ShiftClient(IHtmlParser htmlParser)
+    public ShiftClient(IHtmlParser htmlParser, ILogger<ShiftClient> logger)
     {
         _htmlParser = htmlParser;
+        _logger = logger;
         _session = new CookieSession("https://shift.gearboxsoftware.com");
     }
     public async Task<string> GetToken(string path)
     {
         var html = await _session.Request($"{base_url}{path}").GetStringAsync();
+        _logger.LogDebug("GetToken got response: {html}", html);
+        
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
         return doc.DocumentNode.SelectNodes("//meta[@name='csrf-token']")[0].Attributes.Single(x => x.Name == "content").Value;
@@ -38,7 +43,9 @@ public class ShiftClient : IShiftClient
                     .AddString("user[password]", password)
                     .AddString("commit", "SIGN IN");
             });
-        return await response.ResponseMessage.Content.ReadAsStringAsync();
+        var loginResponse = await response.ResponseMessage.Content.ReadAsStringAsync();
+        _logger.LogDebug("Login got response {loginResponse}", loginResponse);
+        return loginResponse;
     }
 
     public async Task<RedemptionResponse> GetRedemptionForm(string code, string service)
@@ -77,7 +84,9 @@ public class ShiftClient : IShiftClient
                     });
                 var respstring = await response.ResponseMessage.Content.ReadAsStringAsync();
                 var redemptionResponse = _htmlParser.GetRedemptionResponse(respstring);
-                Console.WriteLine($"The code : {form_code} gives the message {redemptionResponse}");
+                _logger.LogDebug("RedeemForm got response {respstring}", respstring);
+
+                _logger.LogInformation($"The code : {form_code} gives the message {redemptionResponse}");
                 return ResponseMapper.Map(redemptionResponse);
             });
         return polly.Result;

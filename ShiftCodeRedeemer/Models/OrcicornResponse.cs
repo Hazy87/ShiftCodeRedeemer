@@ -1,4 +1,4 @@
-﻿namespace ShiftCodeRedeemer;
+﻿namespace ShiftCodeRedeemer.Models;
 
 public class OrcicornResponse
 {

@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using ShiftCodeRedeemer;
 using ShiftCodeRedeemer.Interface;
 using ShiftCodeRedeemer.Services;
@@ -18,6 +19,10 @@ var serviceProvider = new ServiceCollection()
     .AddSingleton<IRedeemDbService, RedeemedDbService>()
     .AddSingleton<IHtmlParser, HtmlParser>()
     .AddSingleton<IShiftClient, ShiftClient>()
+    .AddLogging(config =>
+    {
+        config.AddConsole();
+    }).Configure<LoggerFilterOptions>(options => options.MinLevel = LogLevel.Information)
     .AddBotClient(botApiToken).Services
     .BuildServiceProvider();
 var service = serviceProvider.GetService<IHandlerService>();

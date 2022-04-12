@@ -1,4 +1,5 @@
-﻿using ShiftCodeRedeemer.Services;
+﻿using ShiftCodeRedeemer.Models;
+using ShiftCodeRedeemer.Services;
 
 namespace ShiftCodeRedeemer.Interface;
 

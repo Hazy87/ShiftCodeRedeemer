@@ -1,6 +1,4 @@
-﻿using System.Security.AccessControl;
-
-namespace ShiftCodeRedeemer;
+﻿namespace ShiftCodeRedeemer.Models;
 
 public class OrcicornCodeModel
 {
