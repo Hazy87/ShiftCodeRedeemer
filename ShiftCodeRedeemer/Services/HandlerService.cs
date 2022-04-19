@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Timers;
+using Microsoft.Extensions.Logging;
 using ShiftCodeRedeemer.Interface;
 using ShiftCodeRedeemer.Models;
+using Timer = System.Threading.Timer;
 
 namespace ShiftCodeRedeemer.Services;
 
@@ -20,6 +22,15 @@ public class HandlerService : IHandlerService
     }
 
     public async Task Handle()
+    {
+        while (true)
+        {
+            await RunJob();
+            await Task.Delay(18000000);
+        }
+    }
+
+    private async Task RunJob()
     {
         var configs = _configService.GetConfig();
         foreach (var config in configs)

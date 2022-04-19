@@ -2,3 +2,5 @@ ShiftCodeRedeemer/Properties/launchSettings.json
 */obj/*
 */bin/*
 
+*/.vs/*
+ShiftCodeRedeemer.Tests/bin/*

@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftCodeRedeemer", "ShiftCodeRedeemer\ShiftCodeRedeemer.csproj", "{61FE02CC-E64F-4FCD-9B4F-ABD41F47E489}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShifftCodeReddemer.Tests", "ShifftCodeReddemer.Tests\ShifftCodeReddemer.Tests.csproj", "{F1F7B8FD-1892-4628-BB93-39111E8CE60D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftCodeRedeemer.Tests", "ShiftCodeRedeemer.Tests\ShiftCodeRedeemer.Tests.csproj", "{F1F7B8FD-1892-4628-BB93-39111E8CE60D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
