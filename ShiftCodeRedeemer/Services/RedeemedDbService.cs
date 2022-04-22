@@ -15,7 +15,7 @@ public class RedeemedDbService : IRedeemDbService
         if (!db.UserCodes.ContainsKey(configUsername))
             db.UserCodes[configUsername] = new List<RedeemedCodeModel>();
 
-        if (db.UserCodes[configUsername].All(x => x.Code != code && x.Platform != platform))
+        if (db.UserCodes[configUsername].Count(x => x.Code != code && x.Platform != platform) == 0)
             db.UserCodes[configUsername].Add(new RedeemedCodeModel{RedemptionResponse = redemptionResponse,Code = code, Platform = platform, Reward = reward});
         else
             db.UserCodes[configUsername].Single(x => x.Code == code && x.Platform == platform).RedemptionResponse = redemptionResponse;
