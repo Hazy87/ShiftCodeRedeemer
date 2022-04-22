@@ -8,5 +8,6 @@ public enum RedemptionResponse
     NotAvailableForYouAccount,
     Expired,
     EnableShiftTitleFirst,
-    SuccessfullyRedeemed
+    SuccessfullyRedeemed,
+    NotAvailableForThisService
 }

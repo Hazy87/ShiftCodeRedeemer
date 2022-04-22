@@ -60,7 +60,9 @@ public class ShiftClient : IShiftClient
                 return RedemptionResponse.NotAvailableForYouAccount;
             if (html.Trim() == "This SHiFT code has expired")
                 return RedemptionResponse.Expired;
-            var entitlementDetails = _htmlParser.GetEntitlementDetails(html);
+            var entitlementDetails = _htmlParser.GetEntitlementDetails(html, service);
+            if (string.IsNullOrEmpty(entitlementDetails.service))
+                return RedemptionResponse.NotAvailableForThisService;
             return await RedeemForm(entitlementDetails.inp, entitlementDetails.form_code, entitlementDetails.check,
                 service);
         });

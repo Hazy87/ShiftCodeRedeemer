@@ -15,10 +15,10 @@ public class RedeemedDbService : IRedeemDbService
         if (!db.UserCodes.ContainsKey(configUsername))
             db.UserCodes[configUsername] = new List<RedeemedCodeModel>();
 
-        if (db.UserCodes[configUsername].All(x => x.Code != code))
+        if (db.UserCodes[configUsername].All(x => x.Code != code && x.Platform != platform))
             db.UserCodes[configUsername].Add(new RedeemedCodeModel{RedemptionResponse = redemptionResponse,Code = code, Platform = platform, Reward = reward});
         else
-            db.UserCodes[configUsername].Single(x => x.Code == code).RedemptionResponse = redemptionResponse;
+            db.UserCodes[configUsername].Single(x => x.Code == code && x.Platform == platform).RedemptionResponse = redemptionResponse;
         await SaveDb(db);
     }
 
@@ -43,9 +43,7 @@ public class RedeemedDbService : IRedeemDbService
     {
         var db = await GetDb();
         if (db.UserCodes.ContainsKey(config.Username))
-            return db.UserCodes[config.Username].Where(x => x.RedemptionResponse == RedemptionResponse.AlreadyRedeemed|| x.RedemptionResponse == RedemptionResponse.NotAvailableForYouAccount || x.RedemptionResponse == RedemptionResponse.Expired || x.RedemptionResponse == RedemptionResponse.EnableShiftTitleFirst || x.RedemptionResponse == RedemptionResponse.SuccessfullyRedeemed).
-
-ToList();
+            return db.UserCodes[config.Username].Where(x => x.RedemptionResponse != RedemptionResponse.Unknown && x.RedemptionResponse != RedemptionResponse.Other).ToList();
         return new List<RedeemedCodeModel>();
     }
 }
